@@ -79,8 +79,14 @@ module.exports = {
     ) {
       config._serviceWorkerRegistrationInjected = true;
       return `<script>
+  let swPath = '/sw.js';
+  let revisionParam = location.search.match(/revision=([^&]+)/);
+  if (revisionParam) {
+    swPath += '?revision=' + revisionParam[1];
+  }
+
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js')
+    navigator.serviceWorker.register(swPath)
     .catch((error) => {
       console.error('Could not setup service worker: ' + error);
     });
