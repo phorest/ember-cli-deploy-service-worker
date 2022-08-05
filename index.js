@@ -19,6 +19,7 @@ module.exports = {
         ignorePattern: undefined,
         version: '1',
         prepend: undefined,
+        revision: undefined,
         distDir(context) {
           return context.distDir;
         },
@@ -32,6 +33,7 @@ module.exports = {
         let ignorePattern = this.readConfig('ignorePattern');
         let version = this.readConfig('version');
         let prepend = this.readConfig('prepend');
+        let revision = this.readConfig('revision');
         let distDir = this.readConfig('distDir');
         let distFiles = this.readConfig('distFiles');
 
@@ -53,6 +55,7 @@ module.exports = {
           distDir,
           version,
           prepend,
+          revision,
         });
 
         if (!distFiles.includes(swFilePath)) {
