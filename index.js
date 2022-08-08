@@ -80,16 +80,19 @@ module.exports = {
       type === 'body-footer' &&
       !config._serviceWorkerRegistrationInjected
     ) {
-      config._serviceWorkerRegistrationInjected = true;
-      return `<script>
-  let swPath = '/sw.js';
-  let revisionParam = location.search.match(/revision=([^&]+)/);
-  if (revisionParam) {
-    swPath += '?revision=' + revisionParam[1];
-  }
+      let revision = config.APP.deployRevision;
+      let swPath;
+      if (revision) {
+        swPath = `/sw.${revision}.js`;
+      } else {
+        swPath = '/sw.js';
+      }
 
+      config._serviceWorkerRegistrationInjected = true;
+
+      return `<script>
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register(swPath)
+    navigator.serviceWorker.register('${swPath}')
     .catch((error) => {
       console.error('Could not setup service worker: ' + error);
     });
